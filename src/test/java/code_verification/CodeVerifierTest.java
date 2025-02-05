@@ -1,23 +1,24 @@
 package code_verification;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CodeVerifierTest {
+
+public class CodeVerifierTest {
     /**
      * This variable is to be set in a way for the path "/tmp/dd2480-builds/" followed
      * by TEST_PROJECT_FOLDER to point to a valid mvn built project with a pom.xml at root
      */
     private static final String TEST_PROJECT_FOLDER = "LaunchInterceptor";
 
-    @BeforeAll
-    static void setUp() {
+    @Before
+    public void setUp() {
         var folder = new File(CodeVerifier.TESTED_PROJECT_BASE_PATH + TEST_PROJECT_FOLDER);
         if (!folder.exists() || !folder.isDirectory() ||
                 Arrays.stream(Objects.requireNonNull(folder.listFiles()))
@@ -30,7 +31,7 @@ class CodeVerifierTest {
     }
 
     @Test
-    void testConstructorValidPath() {
+    public void testConstructorValidPath() {
         assertDoesNotThrow(() -> new CodeVerifier(TEST_PROJECT_FOLDER));
         assertThrows(IllegalStateException.class,
                 () -> new CodeVerifier(TEST_PROJECT_FOLDER).getCompilationOutput()
@@ -41,35 +42,35 @@ class CodeVerifierTest {
     }
 
     @Test
-    void testConstructorNoPom() {
+    public void testConstructorNoPom() {
         assertThrows(IllegalArgumentException.class,
                 () -> new CodeVerifier(TEST_PROJECT_FOLDER + "NoPom")
         );
     }
 
     @Test
-    void testConstructorEmptyFolder() {
+    public void testConstructorEmptyFolder() {
         assertThrows(IllegalArgumentException.class,
                 () -> new CodeVerifier(TEST_PROJECT_FOLDER + "Empty")
         );
     }
 
     @Test
-    void testConstructorWrongPath() {
+    public void testConstructorWrongPath() {
         assertThrows(IllegalArgumentException.class,
                 () -> new CodeVerifier(TEST_PROJECT_FOLDER + "qwerty")
         );
     }
 
     @Test
-    void testConstructorFilePath() {
+    public void testConstructorFilePath() {
         assertThrows(IllegalArgumentException.class,
                 () -> new CodeVerifier(TEST_PROJECT_FOLDER + "/pom.xml")
         );
     }
 
     @Test
-    void testVerifyCompilationReturnsFalse() {
+    public void testVerifyCompilationReturnsFalse() {
         var cVerifier = new CodeVerifier(TEST_PROJECT_FOLDER + "JavaTypo");
         try {
             assertFalse(cVerifier.verifyCompilation());
@@ -82,7 +83,7 @@ class CodeVerifierTest {
     }
 
     @Test
-    void testVerifyCompilationReturnsTrue() {
+    public void testVerifyCompilationReturnsTrue() {
         var cVerifier = new CodeVerifier(TEST_PROJECT_FOLDER);
         try {
             assertTrue(cVerifier.verifyCompilation());
@@ -95,7 +96,7 @@ class CodeVerifierTest {
     }
 
     @Test
-    void testRunTestsReturnsFalse() {
+    public void testRunTestsReturnsFalse() {
         var cVerifier = new CodeVerifier(TEST_PROJECT_FOLDER + "TestFail");
         try {
             assertTrue(cVerifier.verifyCompilation());
@@ -110,7 +111,7 @@ class CodeVerifierTest {
     }
 
     @Test
-    void testRunTestsReturnsTrue() {
+    public void testRunTestsReturnsTrue() {
         var cVerifier = new CodeVerifier(TEST_PROJECT_FOLDER);
         try {
             assertTrue(cVerifier.verifyCompilation());
@@ -122,5 +123,13 @@ class CodeVerifierTest {
         assertFalse(cVerifier.getCompilationOutput().isBlank());
         assertDoesNotThrow(cVerifier::getTestXml);
         assertTrue(Objects.nonNull(cVerifier.getTestXml()));
+    }
+
+    private void assertDoesNotThrow(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (Exception e) {
+            fail("Caught exception: " + e + "\n\t" + e.getMessage());
+        }
     }
 }
