@@ -3,7 +3,6 @@ package code_verification;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +19,14 @@ public class CodeVerifier {
     private boolean isTested;
     private List<String> testXml;
 
+    /**
+     * The CodeVerifier constructor makes sure the given project folder path points to a valid maven projects
+     *
+     * @param projectFolderPath the absolute path to the folder containing the project (a String)
+     * @throws IllegalArgumentException if the path points to no existing resource
+     * @throws IllegalArgumentException if the path points to a file instead of a folder
+     * @throws IllegalArgumentException if the path points to a folder that contains no pom.xml file
+     */
     public CodeVerifier(String projectFolderPath) {
         var folder = new File(TESTED_PROJECT_BASE_PATH + projectFolderPath);
 
@@ -39,6 +46,13 @@ public class CodeVerifier {
         this.isTested = false;
     }
 
+    /**
+     * Tries to compile the project in the folder given to the class constructor
+     *
+     * @return true if the compilation did not return any error, false otherwise
+     * @throws IOException          if the standard output of the process gets interrupted
+     * @throws InterruptedException if the subprocess compiling the source gets interrupted before completion
+     */
     public boolean verifyCompilation() throws IOException, InterruptedException {
         ProcessBuilder builder = new ProcessBuilder();
         builder.command("sh", "-c", "mvn compile");
@@ -63,6 +77,14 @@ public class CodeVerifier {
         return exitCode == 0;
     }
 
+    /**
+     * Tries to run all the tests in the folder previously given to the constructor
+     * This method relies on the maven library surefire to run JUnit tests
+     *
+     * @return true if every test succeeded, false otherwise
+     * @throws IOException          if the standard output of the process gets interrupted
+     * @throws InterruptedException if the subprocess compiling the source gets interrupted before completion
+     */
     public boolean runTests() throws IOException, InterruptedException {
         ProcessBuilder builder = new ProcessBuilder();
         builder.command("sh", "-c", "mvn test");
@@ -94,11 +116,18 @@ public class CodeVerifier {
         return exitCode == 0;
     }
 
+    /**
+     * Walks through the given folder and its subfolders to find all xml files and loads their content
+     *
+     * @param folder the folder in which surefire placed its test reports
+     * @return a List of String representing each the content of one xml report produced by maven::surefire
+     * @throws IOException if the execution encounters an error while reading one xml file
+     */
     private List<String> loadXmlFromFolder(String folder) throws IOException {
         List<String> files;
         try (var pathStream = Files.walk(Paths.get(folder))) {
             files = pathStream
-                .filter(Files::isRegularFile)
+                    .filter(Files::isRegularFile)
                     .filter(path -> path.toString().toLowerCase().endsWith(".xml"))
                     .map(path -> {
                         String xmlFileContent = null;
@@ -115,12 +144,24 @@ public class CodeVerifier {
         return files;
     }
 
+    /**
+     * If the code has already been compiled, this returns the console output
+     *
+     * @return the console output of the maven compilation
+     * @throws IllegalStateException if the project has not been compiled yet
+     */
     public String getCompilationOutput() {
         if (!isCompiled)
             throw new IllegalStateException("No compilation has been done yet.");
         return compilationOutput;
     }
 
+    /**
+     * If the tests have already been run, this returns the test result xml files
+     *
+     * @return the test result xml files from surefire
+     * @throws IllegalStateException if the tests have not been run yet
+     */
     public List<String> getTestXml() {
         if (!isTested)
             throw new IllegalStateException("No test has been run yet.");

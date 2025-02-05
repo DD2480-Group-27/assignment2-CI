@@ -111,7 +111,7 @@ class CodeVerifierTest {
 
     @Test
     void testRunTestsReturnsTrue() {
-        var cVerifier = new CodeVerifier(TEST_PROJECT_FOLDER );
+        var cVerifier = new CodeVerifier(TEST_PROJECT_FOLDER);
         try {
             assertTrue(cVerifier.verifyCompilation());
             assertTrue(cVerifier.runTests());
