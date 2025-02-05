@@ -50,10 +50,13 @@ public class CodeVerifier {
      * Tries to compile the project in the folder given to the class constructor
      *
      * @return true if the compilation did not return any error, false otherwise
-     * @throws IOException          if the standard output of the process gets interrupted
-     * @throws InterruptedException if the subprocess compiling the source gets interrupted before completion
+     * @throws IOException           if the standard output of the process gets interrupted
+     * @throws InterruptedException  if the subprocess compiling the source gets interrupted before completion
+     * @throws IllegalStateException if the method is called a second time on the same project
      */
     public boolean verifyCompilation() throws IOException, InterruptedException {
+        if (isCompiled)
+            throw new IllegalStateException("The code has already been compiled.");
         ProcessBuilder builder = new ProcessBuilder();
         builder.command("sh", "-c", "mvn compile");
         builder.directory(projectFolder);
@@ -82,10 +85,13 @@ public class CodeVerifier {
      * This method relies on the maven library surefire to run JUnit tests
      *
      * @return true if every test succeeded, false otherwise
-     * @throws IOException          if the standard output of the process gets interrupted
-     * @throws InterruptedException if the subprocess compiling the source gets interrupted before completion
+     * @throws IOException           if the standard output of the process gets interrupted
+     * @throws InterruptedException  if the subprocess compiling the source gets interrupted before completion
+     * @throws IllegalStateException if the method is called a second time on the same project
      */
     public boolean runTests() throws IOException, InterruptedException {
+        if (isTested)
+            throw new IllegalStateException("The tests have already been run.");
         ProcessBuilder builder = new ProcessBuilder();
         builder.command("sh", "-c", "mvn test");
         builder.directory(projectFolder);
