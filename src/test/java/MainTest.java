@@ -1,7 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Before;
 
 class MainTest {
 
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {}
+    @Before
+    public void setUp() {}
 }
