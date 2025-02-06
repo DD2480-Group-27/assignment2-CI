@@ -17,12 +17,26 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 */
 public class Main extends AbstractHandler
 {
+    
+    public void clone(String repo){
+
+        try {
+             System.out.println("Cloning repository from " + repo);
+             Git.cloneRepository()
+                     .setURI(repo)
+                     .setDirectory(new File("repoclone"))
+                     .call();
+             System.out.println("Repository cloned successfully.");
+         } catch (GitAPIException e) {
+             e.printStackTrace();
+         }
+    }
     public void handle(String target,
                        Request baseRequest,
                        HttpServletRequest request,
                        HttpServletResponse response) 
-        throws IOException, ServletException
-    {
+        throws IOException, ServletException{
+
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
@@ -34,17 +48,7 @@ public class Main extends AbstractHandler
         // 1st clone your repository
         
         String repo = "https://github.com/DD2480-Group-27/assignment2-CI.git";
-
-       try {
-            System.out.println("Cloning repository from " + repo);
-            Git.cloneRepository()
-                    .setURI(repo)
-                    .setDirectory(null)
-                    .call();
-            System.out.println("Repository cloned successfully.");
-        } catch (GitAPIException e) {
-            e.printStackTrace();
-        }
+        clone(repo);
 
         // 2nd compile the code
        
@@ -53,9 +57,11 @@ public class Main extends AbstractHandler
     // used to start the CI server in command line
     public static void main(String[] args) throws Exception
     {
-        
+        Main handler = new Main();
+        String repo = "https://github.com/DD2480-Group-27/assignment2-CI.git";
+        handler.clone(repo);
         Server server = new Server(8080);
-        server.setHandler(new Main()); 
+        server.setHandler(handler); 
         server.start();
         server.join();
         
