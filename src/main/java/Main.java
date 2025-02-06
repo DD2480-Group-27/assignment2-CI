@@ -1,12 +1,16 @@
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-
+import java.io.BufferedReader;
+import javax.tools.*;
 import java.io.File;
 import java.io.IOException;
- 
-import org.eclipse.jetty.server.Server;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -31,6 +35,23 @@ public class Main extends AbstractHandler
              e.printStackTrace();
          }
     }
+
+     
+
+    public void compile(String file){
+
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        int result = compiler.run(null, null, null,
+             file);
+
+        if (result == 0){
+            System.out.println("Compile successful");
+        } else {
+            System.out.println("Compile failed");
+        }
+
+    }
+
     public void handle(String target,
                        Request baseRequest,
                        HttpServletRequest request,
@@ -44,9 +65,8 @@ public class Main extends AbstractHandler
         System.out.println(target);
 
         // here you do all the continuous integration tasks
-        // for example
-        // 1st clone your repository
         
+        // 1st clone your repository
         String repo = "https://github.com/DD2480-Group-27/assignment2-CI.git";
         clone(repo);
 
@@ -60,6 +80,10 @@ public class Main extends AbstractHandler
         Main handler = new Main();
         String repo = "https://github.com/DD2480-Group-27/assignment2-CI.git";
         handler.clone(repo);
+
+        String javaFile = "repoclone/src/main/java/Main.java";
+        handler.compile(javaFile);
+
         Server server = new Server(8080);
         server.setHandler(handler); 
         server.start();
