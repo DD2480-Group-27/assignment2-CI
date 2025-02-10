@@ -1,14 +1,14 @@
 package code_verification;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.StringReader;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -23,26 +23,31 @@ public class CodeVerifierTest {
     private static final String TEST_PROJECT_FOLDER = "LaunchInterceptor";
     private DocumentBuilder documentBuilder;
 
-    @Before
-    public void setUp() {
-        try {
-            // XML Parser setup
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            documentBuilder = factory.newDocumentBuilder();
-        } catch (Exception e) {
-            fail("Failed to initialize DocumentBuilder: " + e.getMessage());
-        }
-        // CodeVerifier setup
+    /**
+     * This method is run before each test
+     */
+    @BeforeClass
+    public static void setUp() {
         var folder = new File(CodeVerifier.TESTED_PROJECT_BASE_PATH + TEST_PROJECT_FOLDER);
         if (!folder.exists() || !folder.isDirectory() ||
                 Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                         .noneMatch(f -> f.getName().endsWith("pom.xml"))
         ) {
-            System.err.println("You do not have the required folder on your computer to run successfully these tests");
-            System.exit(1);
-            // fail("Make sure to have a project at the designated folder with a pom.xml file in it");
-        }
-    }   
+            System.out.println("Test environment missing test samples\nWill proceed adding them from resources");
+            ProcessBuilder builder = new ProcessBuilder();
+            builder.command("sh", "-c", "sh setup-codeVerifTestRes-linux.sh");
+            builder.directory(new File("./resources/"));
+            try {
+                Process process = builder.start();
+                int exitCode = process.waitFor();
+                if (exitCode != 0) {throw new IOException("Failed setting");}
+            } catch (IOException | InterruptedException e) {
+                System.err.println("Error while extracting resources");
+                System.exit(1);
+            }
+            System.out.println("Test samples successfully added");
+        } else System.out.println("Test environment already setup\nWill proceed with tests");
+    }
 
     @Test
     public void testConstructorValidPath() {
@@ -147,6 +152,16 @@ public class CodeVerifierTest {
         }
     }
 
+    private void initDocumentBuilder() {
+        try {
+            // XML Parser setup
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            documentBuilder = factory.newDocumentBuilder();
+        } catch (Exception e) {
+            fail("Failed to initialize DocumentBuilder: " + e.getMessage());
+        }
+    }
+
     private Document parseXml(String xmlContent) {
         try {
             return documentBuilder.parse(new InputSource(new StringReader(xmlContent)));
@@ -157,6 +172,7 @@ public class CodeVerifierTest {
 
     @Test
     public void testValidXml() {
+        initDocumentBuilder();
         String validXml = """
             <root>
                 <child>Hello, World!</child>
@@ -170,6 +186,7 @@ public class CodeVerifierTest {
 
     @Test
     public void testInvalidXml() {
+        initDocumentBuilder();
         String invalidXml = """
             <root>
                 <child>Hello, World!
@@ -182,6 +199,7 @@ public class CodeVerifierTest {
 
     @Test
     public void testEmptyXml() {
+        initDocumentBuilder();
         String emptyXml = "";
         Document document = parseXml(emptyXml);
         assertNull("Document should be null for empty XML", document);
@@ -189,6 +207,7 @@ public class CodeVerifierTest {
 
     @Test
     public void testWhitespaceOnlyXml() {
+        initDocumentBuilder();
         String whitespaceOnlyXml = "    ";
         Document document = parseXml(whitespaceOnlyXml);
         assertNull("Document should be null for whitespace-only XML", document);
