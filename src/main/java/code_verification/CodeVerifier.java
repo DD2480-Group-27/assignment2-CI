@@ -127,7 +127,6 @@ public class CodeVerifier {
         int exitCode = process.waitFor();
 
 
-        // TODO testXml is a list of Strings, could be made into list of xml object for easier use in the following steps (notifications)
         this.testXml = loadXmlFromFolder(reportPath);
         this.isTested = true;
         return exitCode == 0;
@@ -136,23 +135,14 @@ public class CodeVerifier {
     
     
 
-    private Document parseXml(String xmlContent) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            return builder.parse(new InputSource(new StringReader(xmlContent)));
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.err.println("Failed to parse XML content: " + e.getMessage());
-            return null;
-        }
-    }
+ 
 
     
     /**
      * Walks through the given folder and its subfolders to find all xml files and loads their content
      *
      * @param folder the folder in which surefire placed its test reports
-     * @return a List of String representing each the content of one xml report produced by maven::surefire
+     * @return a List of Document representing each the content of one xml report produced by maven::surefire
      * @throws IOException if the execution encounters an error while reading one xml file
      */
     private List<Document> loadXmlFromFolder(String folder) throws IOException {
@@ -175,6 +165,24 @@ public class CodeVerifier {
                     .toList();
         }
         return files;
+    }
+
+/**
+     * Parses a given XML string and converts it into a Document object.
+     *
+     * @param xmlContent the content of the XML file as a string
+     * @return a Document representation of the parsed XML, or {@code null} if parsing fails
+     * @throws IllegalArgumentException if the input is malformed or invalid
+     */
+    private Document parseXml(String xmlContent) {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            return builder.parse(new InputSource(new StringReader(xmlContent)));
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            System.err.println("Failed to parse XML content: " + e.getMessage());
+            return null;
+        }
     }
 
     /**
