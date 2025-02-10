@@ -9,6 +9,17 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import org.w3c.dom.Document;
+
+
+
 public class CodeVerifier {
 
     public static final String TESTED_PROJECT_BASE_PATH = "/tmp/dd2480-builds/";
@@ -17,7 +28,7 @@ public class CodeVerifier {
     private boolean isCompiled;
     private String compilationOutput;
     private boolean isTested;
-    private List<String> testXml;
+    private List<Document> testXml;
 
     /**
      * The CodeVerifier constructor makes sure the given project folder path points to a valid maven projects
@@ -121,7 +132,22 @@ public class CodeVerifier {
         this.isTested = true;
         return exitCode == 0;
     }
+    
+    
+    
 
+    private Document parseXml(String xmlContent) {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            return builder.parse(new InputSource(new StringReader(xmlContent)));
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            System.err.println("Failed to parse XML content: " + e.getMessage());
+            return null;
+        }
+    }
+
+    
     /**
      * Walks through the given folder and its subfolders to find all xml files and loads their content
      *
@@ -129,8 +155,8 @@ public class CodeVerifier {
      * @return a List of String representing each the content of one xml report produced by maven::surefire
      * @throws IOException if the execution encounters an error while reading one xml file
      */
-    private List<String> loadXmlFromFolder(String folder) throws IOException {
-        List<String> files;
+    private List<Document> loadXmlFromFolder(String folder) throws IOException {
+        List<Document> files;
         try (var pathStream = Files.walk(Paths.get(folder))) {
             files = pathStream
                     .filter(Files::isRegularFile)
@@ -144,6 +170,7 @@ public class CodeVerifier {
                         }
                         return xmlFileContent;
                     })
+                    .map(this::parseXml)
                     .filter(Objects::nonNull)
                     .toList();
         }
@@ -168,7 +195,7 @@ public class CodeVerifier {
      * @return the test result xml files from surefire
      * @throws IllegalStateException if the tests have not been run yet
      */
-    public List<String> getTestXml() {
+    public List<Document> getTestXml() {
         if (!isTested)
             throw new IllegalStateException("No test has been run yet.");
         return testXml;
