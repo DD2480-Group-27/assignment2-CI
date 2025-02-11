@@ -1,6 +1,6 @@
 import org.junit.Before;
 
-class MainTest {
+class CIServerTest {
 
     @Before
     public void setUp() {}
