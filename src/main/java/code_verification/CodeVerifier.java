@@ -166,12 +166,10 @@ public class CodeVerifier {
      *
      * @param xmlContent the content of the XML file as a string
      * @return a Document representation of the parsed XML, or {@code null} if parsing fails
-     * @throws IllegalArgumentException if the input is malformed or invalid
      */
     private Document parseXml(String xmlContent) {
         try {
             if (xmlContent == null || xmlContent.trim().isEmpty()) {
-                System.err.println("Failed to parse XML content: Input is empty or contains only whitespace.");
                 return null;
             }
 
@@ -179,7 +177,6 @@ public class CodeVerifier {
             DocumentBuilder builder = factory.newDocumentBuilder();
             return builder.parse(new InputSource(new StringReader(xmlContent)));
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.err.println("Failed to parse XML content: " + e.getMessage());
             return null;
         }
     }
