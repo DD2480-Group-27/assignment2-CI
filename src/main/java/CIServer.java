@@ -14,12 +14,12 @@ import org.json.JSONObject;
 import org.eclipse.jgit.api.Git;
 
 public class CIServer extends AbstractHandler {
-    
+
     public void handle(String target,
                        Request baseRequest,
                        HttpServletRequest request,
-                       HttpServletResponse response) 
-        throws IOException, ServletException 
+                       HttpServletResponse response)
+        throws IOException, ServletException
     {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -49,7 +49,7 @@ public class CIServer extends AbstractHandler {
             String commitHash = json.getJSONObject("head_commit").getString("id");
 
             // Parse the ref into a proper branch name
-            String branchName = ref.replace("refs/head/", "");
+            String branchName = ref.replace("refs/heads/", "");
 
             System.out.println("Ref: " + ref);
             System.out.println("Branch Name: "+ branchName);
@@ -89,6 +89,11 @@ public class CIServer extends AbstractHandler {
             // Create a unique directory for this build using the commit hash
             String buildDir = "build-" + commitHash;
             File repoDir = new File(baseDir, buildDir);
+            //if the directory exists for a commit hash, then delete it
+            if(repoDir.exists()){
+               deleteDirectory(repoDir);
+            }
+            //then create a new empty directory
             repoDir.mkdir();
 
             // Clone the repository
@@ -116,10 +121,23 @@ public class CIServer extends AbstractHandler {
         }
     }
 
+    private boolean deleteDirectory(File directory) {
+        if (directory.isDirectory()) {
+            // List all files and subdirectories
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    // Recursively delete subdirectories and files
+                    deleteDirectory(file);
+                }
+            }
+        }
+        // delete the directory itself
+        return directory.delete(); }
     // used to start the CI server in command line
     public static void main(String[] args) throws Exception {
         Server server = new Server(8027);
-        server.setHandler(new CIServer()); 
+        server.setHandler(new CIServer());
         server.start();
         server.join();
     }
