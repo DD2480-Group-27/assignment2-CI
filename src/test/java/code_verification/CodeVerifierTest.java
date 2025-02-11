@@ -1,6 +1,5 @@
 package code_verification;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -8,7 +7,9 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class CodeVerifierTest {
      * This variable is to be set in a way for the path "/tmp/dd2480-builds/" followed
      * by TEST_PROJECT_FOLDER to point to a valid mvn built project with a pom.xml at root
      */
-    private static final String TEST_PROJECT_FOLDER = "LaunchInterceptor";
+    private static final String TEST_PROJECT_FOLDER = CodeVerifier.TESTED_PROJECT_BASE_PATH + "test-LaunchInterceptor";
     private DocumentBuilder documentBuilder;
 
     /**
@@ -28,7 +29,7 @@ public class CodeVerifierTest {
      */
     @BeforeClass
     public static void setUp() {
-        var folder = new File(CodeVerifier.TESTED_PROJECT_BASE_PATH + TEST_PROJECT_FOLDER);
+        var folder = new File(TEST_PROJECT_FOLDER);
         if (!folder.exists() || !folder.isDirectory() ||
                 Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                         .noneMatch(f -> f.getName().endsWith("pom.xml"))
@@ -40,7 +41,9 @@ public class CodeVerifierTest {
             try {
                 Process process = builder.start();
                 int exitCode = process.waitFor();
-                if (exitCode != 0) {throw new IOException("Failed setting");}
+                if (exitCode != 0) {
+                    throw new IOException("Failed setting");
+                }
             } catch (IOException | InterruptedException e) {
                 System.err.println("Error while extracting resources");
                 System.exit(1);
@@ -174,24 +177,26 @@ public class CodeVerifierTest {
     public void testValidXml() {
         initDocumentBuilder();
         String validXml = """
-            <root>
-                <child>Hello, World!</child>
-            </root>
-            """;
+                <root>
+                    <child>Hello, World!</child>
+                </root>
+                """;
 
         Document document = parseXml(validXml);
         assertNotNull("Document should not be null for valid XML", document);
-        assertEquals("Root element should be 'root'", "root", document.getDocumentElement().getNodeName());
+        assertEquals("Root element should be 'root'", "root",
+                document.getDocumentElement().getNodeName()
+        );
     }
 
     @Test
     public void testInvalidXml() {
         initDocumentBuilder();
         String invalidXml = """
-            <root>
-                <child>Hello, World!
-            </root>
-            """;
+                <root>
+                    <child>Hello, World!
+                </root>
+                """;
 
         Document document = parseXml(invalidXml);
         assertNull("Document should be null for invalid XML", document);

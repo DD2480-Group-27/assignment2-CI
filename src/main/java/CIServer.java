@@ -1,16 +1,30 @@
+
+import code_verification.CodeVerifier;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import server_communication.WebhookJSONAnalyser;
+
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import server_communication.WebhookJSONAnalyser;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ResetCommand;
+import org.eclipse.jgit.api.errors.GitAPIException;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 
 public class CIServer extends AbstractHandler {
+
 
     /**
      * Handles incoming HTTP requests for the CI server.
@@ -56,24 +70,43 @@ public class CIServer extends AbstractHandler {
             }
         }
 
+
         WebhookJSONAnalyser payloadAnalyser = null;
+
         try {
             payloadAnalyser = new WebhookJSONAnalyser(payloadBuilder.toString());
 
-            var repoPath = payloadAnalyser.getRepoPath();
-
             var commitHash = payloadAnalyser.getCommitHash();
             var commitMail = payloadAnalyser.getCommitMail();
-            var commitMessage = payloadAnalyser.getCommitMessage();
-            var commitRef = payloadAnalyser.getCommitRef();
-            var commitBranch = payloadAnalyser.getCommitBranch();
-            var commitAuthor = payloadAnalyser.getCommitAuthor();
+            var commitMessage = payloadAnalyser.getCommitMessage(); // Is this neccesary?
+            var commitRef = payloadAnalyser.getCommitRef();         
+            var commitBranch = payloadAnalyser.getCommitBranch();   
+            var commitAuthor = payloadAnalyser.getCommitAuthor();   // Is this neccesary?
             var repoURL = payloadAnalyser.getRepoURL();
 
-            // TODO call verification and retrieve either compilation failure output
-            //  or test results if compilation succeeded
+            // Store the path to the cloned repo
+            String codePath = cloneRepo(repoURL, commitHash, commitBranch);
 
+            // Code Validation
+            var codeVerifier = new CodeVerifier(codePath);
 
+            
+            // Verifies the code compilation and runs the associated tests if compilation is successful.
+            // If the code fails to compile, retrieves the compilation output.
+            // If the tests fail, retrieves the test result and output for further notification.
+            try {
+                if (codeVerifier.verifyCompilation()) {
+                    var testResult = codeVerifier.runTests();
+                    var testOutputXml = codeVerifier.getTestXml();
+                    // TODO  notification with test result if testResult != 0 also send testOutputXml
+                } else {
+                    var compilationOutput = codeVerifier.getCompilationOutput();
+                    // TODO  notification with compilation result
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new IOException("Compilation process was interrupted", e);
+            }
 
 
             // TODO call email notification
@@ -83,6 +116,23 @@ public class CIServer extends AbstractHandler {
         }
 
         response.getWriter().println("The CI server says 'Hello!'");
+    }
+    
+    private String cloneRepo(String repoURL, String commitHash, String branchName) throws IOException {
+        File localRepo = Files.createTempDirectory("ci-server-repo").toFile();
+        try {
+            Git git = Git.cloneRepository()
+                    .setURI(repoURL)
+                    .setDirectory(localRepo)
+                    .setBranch(branchName)
+                    .call();
+
+            git.reset().setMode(ResetCommand.ResetType.HARD).setRef(commitHash).call();
+            git.close();
+        } catch (GitAPIException e) {
+            throw new IOException("Failed to clone repository: " + e.getMessage(), e);
+        }
+        return localRepo.getAbsolutePath();
     }
 
     // used to start the CI server in command line
