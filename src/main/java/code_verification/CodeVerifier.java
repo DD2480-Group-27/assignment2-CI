@@ -1,5 +1,12 @@
 package code_verification;
 
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,20 +16,10 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import org.w3c.dom.Document;
-
-
 
 public class CodeVerifier {
 
-    public static final String TESTED_PROJECT_BASE_PATH = "/tmp/dd2480-builds/";
+    public static final String TESTED_PROJECT_BASE_PATH = System.getProperty("java.io.tmpdir") + "/dd2480-builds/";
 
     private final File projectFolder;
     private boolean isCompiled;
@@ -39,7 +36,7 @@ public class CodeVerifier {
      * @throws IllegalArgumentException if the path points to a folder that contains no pom.xml file
      */
     public CodeVerifier(String projectFolderPath) {
-        var folder = new File(TESTED_PROJECT_BASE_PATH + projectFolderPath);
+        var folder = new File(projectFolderPath);
 
         if (!folder.exists())
             throw new IllegalArgumentException("The given project path does not exist.");
@@ -59,6 +56,7 @@ public class CodeVerifier {
 
     /**
      * Tries to compile the project in the folder given to the class constructor
+     * This method is intended to be run only once since the result of the compilation should be deterministic
      *
      * @return true if the compilation did not return any error, false otherwise
      * @throws IOException           if the standard output of the process gets interrupted
@@ -94,6 +92,7 @@ public class CodeVerifier {
     /**
      * Tries to run all the tests in the folder previously given to the constructor
      * This method relies on the maven library surefire to run JUnit tests
+     * This method is intended to be run only once since the result of the tests should be deterministic
      *
      * @return true if every test succeeded, false otherwise
      * @throws IOException           if the standard output of the process gets interrupted
@@ -131,13 +130,8 @@ public class CodeVerifier {
         this.isTested = true;
         return exitCode == 0;
     }
-    
-    
-    
 
- 
 
-    
     /**
      * Walks through the given folder and its subfolders to find all xml files and loads their content
      *
@@ -180,7 +174,7 @@ public class CodeVerifier {
                 System.err.println("Failed to parse XML content: Input is empty or contains only whitespace.");
                 return null;
             }
-    
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             return builder.parse(new InputSource(new StringReader(xmlContent)));
@@ -189,7 +183,7 @@ public class CodeVerifier {
             return null;
         }
     }
-    
+
 
     /**
      * If the code has already been compiled, this returns the console output
