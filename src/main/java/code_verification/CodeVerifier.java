@@ -176,6 +176,11 @@ public class CodeVerifier {
      */
     private Document parseXml(String xmlContent) {
         try {
+            if (xmlContent == null || xmlContent.trim().isEmpty()) {
+                System.err.println("Failed to parse XML content: Input is empty or contains only whitespace.");
+                return null;
+            }
+    
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             return builder.parse(new InputSource(new StringReader(xmlContent)));
@@ -184,6 +189,7 @@ public class CodeVerifier {
             return null;
         }
     }
+    
 
     /**
      * If the code has already been compiled, this returns the console output
