@@ -1,26 +1,27 @@
+import code_verification.CodeVerifier;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ResetCommand;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import jakarta.servlet.ServletException;
-import org.eclipse.jgit.api.ResetCommand;
-import org.json.JSONObject;
-import org.eclipse.jgit.api.Git;
 
 public class CIServer extends AbstractHandler {
-    
+
     public void handle(String target,
                        Request baseRequest,
                        HttpServletRequest request,
-                       HttpServletResponse response) 
-        throws IOException, ServletException 
-    {
+                       HttpServletResponse response)
+            throws IOException, ServletException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
@@ -37,8 +38,6 @@ public class CIServer extends AbstractHandler {
             }
         }
 
-        // System.out.println("Payload received:\n" + payload.toString());
-
         try {
             JSONObject json = new JSONObject(payload.toString());
             // Get the branch name
@@ -52,15 +51,23 @@ public class CIServer extends AbstractHandler {
             String branchName = ref.replace("refs/head/", "");
 
             System.out.println("Ref: " + ref);
-            System.out.println("Branch Name: "+ branchName);
+            System.out.println("Branch Name: " + branchName);
             System.out.println("Repo URL: " + htmlUrl);
-            System.out.println("Commit Hash: "+ commitHash);
+            System.out.println("Commit Hash: " + commitHash);
             // Store the path to the cloned repo
-            String codePath =  cloneRepo(htmlUrl, commitHash, branchName );
+            String codePath = cloneRepo(htmlUrl, commitHash, branchName);
 
             // Code Validation
+            var codeVerifier = new CodeVerifier(codePath);
 
-            // After
+            if (codeVerifier.verifyCompilation()) {
+                var testResult = codeVerifier.runTests();
+                var testOutputXml = codeVerifier.getTestXml();
+                //TODO trigger notification with test result
+            } else {
+                var compilationOutput = codeVerifier.getCompilationOutput();
+                //TODO trigger notification with compilation failure
+            }
 
         } catch (Exception e) {
             System.out.println("Error parsing JSON payload: " + e.getMessage());
@@ -119,7 +126,7 @@ public class CIServer extends AbstractHandler {
     // used to start the CI server in command line
     public static void main(String[] args) throws Exception {
         Server server = new Server(8027);
-        server.setHandler(new CIServer()); 
+        server.setHandler(new CIServer());
         server.start();
         server.join();
     }
