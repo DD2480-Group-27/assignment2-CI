@@ -1,0 +1,436 @@
+
+[
+  {
+    "ref": "refs/heads/main",
+    "before": "0955f7f8ec9a2f3612e772e86ecb1f81fb43079b",
+    "after": "426455fc8993003f1153c034496c7bb27b8ae553",
+    "repository": {
+      "id": 920508618,
+      "node_id": "R_kgDONt3Yyg",
+      "name": "LaunchInterceptor",
+      "full_name": "DD2480-Group-27/LaunchInterceptor",
+      "private": false,
+      "owner": {
+        "name": "DD2480-Group-27",
+        "email": null,
+        "login": "DD2480-Group-27",
+        "id": 197070777,
+        "node_id": "O_kgDOC78PuQ",
+        "avatar_url": "https://avatars.githubusercontent.com/u/197070777?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/DD2480-Group-27",
+        "html_url": "https://github.com/DD2480-Group-27",
+        "followers_url": "https://api.github.com/users/DD2480-Group-27/followers",
+        "following_url": "https://api.github.com/users/DD2480-Group-27/following{/other_user}",
+        "gists_url": "https://api.github.com/users/DD2480-Group-27/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/DD2480-Group-27/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/DD2480-Group-27/subscriptions",
+        "organizations_url": "https://api.github.com/users/DD2480-Group-27/orgs",
+        "repos_url": "https://api.github.com/users/DD2480-Group-27/repos",
+        "events_url": "https://api.github.com/users/DD2480-Group-27/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/DD2480-Group-27/received_events",
+        "type": "Organization",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/DD2480-Group-27/LaunchInterceptor",
+      "description": "Course work in DD2480 Software Engineering Fundamentals",
+      "fork": false,
+      "url": "https://github.com/DD2480-Group-27/LaunchInterceptor",
+      "forks_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/forks",
+      "keys_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/teams",
+      "hooks_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/hooks",
+      "issue_events_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/events",
+      "assignees_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/tags",
+      "blobs_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/languages",
+      "stargazers_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/stargazers",
+      "contributors_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/contributors",
+      "subscribers_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/subscribers",
+      "subscription_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/subscription",
+      "commits_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/merges",
+      "archive_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/downloads",
+      "issues_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/labels{/name}",
+      "releases_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/deployments",
+      "created_at": 1737537913,
+      "updated_at": "2025-02-03T09:19:35Z",
+      "pushed_at": 1739367212,
+      "git_url": "git://github.com/DD2480-Group-27/LaunchInterceptor.git",
+      "ssh_url": "git@github.com:DD2480-Group-27/LaunchInterceptor.git",
+      "clone_url": "https://github.com/DD2480-Group-27/LaunchInterceptor.git",
+      "svn_url": "https://github.com/DD2480-Group-27/LaunchInterceptor",
+      "homepage": "",
+      "size": 836,
+      "stargazers_count": 2,
+      "watchers_count": 2,
+      "language": "Java",
+      "has_issues": true,
+      "has_projects": true,
+      "has_downloads": true,
+      "has_wiki": true,
+      "has_pages": false,
+      "has_discussions": false,
+      "forks_count": 0,
+      "mirror_url": null,
+      "archived": false,
+      "disabled": false,
+      "open_issues_count": 0,
+      "license": null,
+      "allow_forking": true,
+      "is_template": false,
+      "web_commit_signoff_required": false,
+      "topics": [
+
+      ],
+      "visibility": "public",
+      "forks": 0,
+      "open_issues": 0,
+      "watchers": 2,
+      "default_branch": "main",
+      "stargazers": 2,
+      "master_branch": "main",
+      "organization": "DD2480-Group-27",
+      "custom_properties": {
+
+      }
+    },
+    "pusher": {
+      "name": "beginner003",
+      "email": "107162349+beginner003@users.noreply.github.com"
+    },
+    "organization": {
+      "login": "DD2480-Group-27",
+      "id": 197070777,
+      "node_id": "O_kgDOC78PuQ",
+      "url": "https://api.github.com/orgs/DD2480-Group-27",
+      "repos_url": "https://api.github.com/orgs/DD2480-Group-27/repos",
+      "events_url": "https://api.github.com/orgs/DD2480-Group-27/events",
+      "hooks_url": "https://api.github.com/orgs/DD2480-Group-27/hooks",
+      "issues_url": "https://api.github.com/orgs/DD2480-Group-27/issues",
+      "members_url": "https://api.github.com/orgs/DD2480-Group-27/members{/member}",
+      "public_members_url": "https://api.github.com/orgs/DD2480-Group-27/public_members{/member}",
+      "avatar_url": "https://avatars.githubusercontent.com/u/197070777?v=4",
+      "description": null
+    },
+    "sender": {
+      "login": "beginner003",
+      "id": 107162349,
+      "node_id": "U_kgDOBmMq7Q",
+      "avatar_url": "https://avatars.githubusercontent.com/u/107162349?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/beginner003",
+      "html_url": "https://github.com/beginner003",
+      "followers_url": "https://api.github.com/users/beginner003/followers",
+      "following_url": "https://api.github.com/users/beginner003/following{/other_user}",
+      "gists_url": "https://api.github.com/users/beginner003/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/beginner003/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/beginner003/subscriptions",
+      "organizations_url": "https://api.github.com/users/beginner003/orgs",
+      "repos_url": "https://api.github.com/users/beginner003/repos",
+      "events_url": "https://api.github.com/users/beginner003/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/beginner003/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "created": false,
+    "deleted": false,
+    "forced": false,
+    "base_ref": null,
+    "compare": "https://github.com/DD2480-Group-27/LaunchInterceptor/compare/0955f7f8ec9a...426455fc8993",
+    "commits": [
+      {
+        "id": "426455fc8993003f1153c034496c7bb27b8ae553",
+        "tree_id": "70d9eb87721fb1505bce51c1d9cc5d9bb53d5c7c",
+        "distinct": true,
+        "message": "Empty-Commit",
+        "timestamp": "2025-02-12T14:32:52+01:00",
+        "url": "https://github.com/DD2480-Group-27/LaunchInterceptor/commit/426455fc8993003f1153c034496c7bb27b8ae553",
+        "author": {
+          "name": "Weng Io Cheang (Yoyo)",
+          "email": "yoyo.cwi@gmail.com",
+          "username": "beginner003"
+        },
+        "committer": {
+          "name": "Weng Io Cheang (Yoyo)",
+          "email": "yoyo.cwi@gmail.com",
+          "username": "beginner003"
+        },
+        "added": [
+
+        ],
+        "removed": [
+
+        ],
+        "modified": [
+
+        ]
+      }
+    ],
+    "head_commit": {
+      "id": "426455fc8993003f1153c034496c7bb27b8ae553",
+      "tree_id": "70d9eb87721fb1505bce51c1d9cc5d9bb53d5c7c",
+      "distinct": true,
+      "message": "Empty-Commit",
+      "timestamp": "2025-02-12T14:32:52+01:00",
+      "url": "https://github.com/DD2480-Group-27/LaunchInterceptor/commit/426455fc8993003f1153c034496c7bb27b8ae553",
+      "author": {
+        "name": "Weng Io Cheang (Yoyo)",
+        "email": "yoyo.cwi@gmail.com",
+        "username": "beginner003"
+      },
+      "committer": {
+        "name": "Weng Io Cheang (Yoyo)",
+        "email": "yoyo.cwi@gmail.com",
+        "username": "beginner003"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+
+      ]
+    }
+  },
+
+  {
+    "ref": "refs/heads/kristin/doc/readme-add-essence",
+    "before": "0b15d31c5fd14538b98503ce038a8c49a30670ff",
+    "after": "8ffc04a68d7449d57a28b41876f93e41600f0240",
+    "repository": {
+      "id": 920508618,
+      "node_id": "R_kgDONt3Yyg",
+      "name": "LaunchInterceptor",
+      "full_name": "DD2480-Group-27/LaunchInterceptor",
+      "private": false,
+      "owner": {
+        "name": "DD2480-Group-27",
+        "email": null,
+        "login": "DD2480-Group-27",
+        "id": 197070777,
+        "node_id": "O_kgDOC78PuQ",
+        "avatar_url": "https://avatars.githubusercontent.com/u/197070777?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/DD2480-Group-27",
+        "html_url": "https://github.com/DD2480-Group-27",
+        "followers_url": "https://api.github.com/users/DD2480-Group-27/followers",
+        "following_url": "https://api.github.com/users/DD2480-Group-27/following{/other_user}",
+        "gists_url": "https://api.github.com/users/DD2480-Group-27/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/DD2480-Group-27/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/DD2480-Group-27/subscriptions",
+        "organizations_url": "https://api.github.com/users/DD2480-Group-27/orgs",
+        "repos_url": "https://api.github.com/users/DD2480-Group-27/repos",
+        "events_url": "https://api.github.com/users/DD2480-Group-27/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/DD2480-Group-27/received_events",
+        "type": "Organization",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/DD2480-Group-27/LaunchInterceptor",
+      "description": "Course work in DD2480 Software Engineering Fundamentals",
+      "fork": false,
+      "url": "https://github.com/DD2480-Group-27/LaunchInterceptor",
+      "forks_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/forks",
+      "keys_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/teams",
+      "hooks_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/hooks",
+      "issue_events_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/events",
+      "assignees_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/tags",
+      "blobs_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/languages",
+      "stargazers_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/stargazers",
+      "contributors_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/contributors",
+      "subscribers_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/subscribers",
+      "subscription_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/subscription",
+      "commits_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/merges",
+      "archive_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/downloads",
+      "issues_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/labels{/name}",
+      "releases_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/DD2480-Group-27/LaunchInterceptor/deployments",
+      "created_at": 1737537913,
+      "updated_at": "2025-02-12T13:33:35Z",
+      "pushed_at": 1739367620,
+      "git_url": "git://github.com/DD2480-Group-27/LaunchInterceptor.git",
+      "ssh_url": "git@github.com:DD2480-Group-27/LaunchInterceptor.git",
+      "clone_url": "https://github.com/DD2480-Group-27/LaunchInterceptor.git",
+      "svn_url": "https://github.com/DD2480-Group-27/LaunchInterceptor",
+      "homepage": "",
+      "size": 836,
+      "stargazers_count": 2,
+      "watchers_count": 2,
+      "language": "Java",
+      "has_issues": true,
+      "has_projects": true,
+      "has_downloads": true,
+      "has_wiki": true,
+      "has_pages": false,
+      "has_discussions": false,
+      "forks_count": 0,
+      "mirror_url": null,
+      "archived": false,
+      "disabled": false,
+      "open_issues_count": 0,
+      "license": null,
+      "allow_forking": true,
+      "is_template": false,
+      "web_commit_signoff_required": false,
+      "topics": [
+
+      ],
+      "visibility": "public",
+      "forks": 0,
+      "open_issues": 0,
+      "watchers": 2,
+      "default_branch": "main",
+      "stargazers": 2,
+      "master_branch": "main",
+      "organization": "DD2480-Group-27",
+      "custom_properties": {
+
+      }
+    },
+    "pusher": {
+      "name": "beginner003",
+      "email": "107162349+beginner003@users.noreply.github.com"
+    },
+    "organization": {
+      "login": "DD2480-Group-27",
+      "id": 197070777,
+      "node_id": "O_kgDOC78PuQ",
+      "url": "https://api.github.com/orgs/DD2480-Group-27",
+      "repos_url": "https://api.github.com/orgs/DD2480-Group-27/repos",
+      "events_url": "https://api.github.com/orgs/DD2480-Group-27/events",
+      "hooks_url": "https://api.github.com/orgs/DD2480-Group-27/hooks",
+      "issues_url": "https://api.github.com/orgs/DD2480-Group-27/issues",
+      "members_url": "https://api.github.com/orgs/DD2480-Group-27/members{/member}",
+      "public_members_url": "https://api.github.com/orgs/DD2480-Group-27/public_members{/member}",
+      "avatar_url": "https://avatars.githubusercontent.com/u/197070777?v=4",
+      "description": null
+    },
+    "sender": {
+      "login": "beginner003",
+      "id": 107162349,
+      "node_id": "U_kgDOBmMq7Q",
+      "avatar_url": "https://avatars.githubusercontent.com/u/107162349?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/beginner003",
+      "html_url": "https://github.com/beginner003",
+      "followers_url": "https://api.github.com/users/beginner003/followers",
+      "following_url": "https://api.github.com/users/beginner003/following{/other_user}",
+      "gists_url": "https://api.github.com/users/beginner003/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/beginner003/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/beginner003/subscriptions",
+      "organizations_url": "https://api.github.com/users/beginner003/orgs",
+      "repos_url": "https://api.github.com/users/beginner003/repos",
+      "events_url": "https://api.github.com/users/beginner003/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/beginner003/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "created": false,
+    "deleted": false,
+    "forced": false,
+    "base_ref": null,
+    "compare": "https://github.com/DD2480-Group-27/LaunchInterceptor/compare/0b15d31c5fd1...8ffc04a68d74",
+    "commits": [
+      {
+        "id": "8ffc04a68d7449d57a28b41876f93e41600f0240",
+        "tree_id": "f3e4b87902de33485f32ad845326b83826e910d7",
+        "distinct": true,
+        "message": "Empty-Commit-in-kristin/doc/readme-add-essence-branch",
+        "timestamp": "2025-02-12T14:40:05+01:00",
+        "url": "https://github.com/DD2480-Group-27/LaunchInterceptor/commit/8ffc04a68d7449d57a28b41876f93e41600f0240",
+        "author": {
+          "name": "Weng Io Cheang (Yoyo)",
+          "email": "yoyo.cwi@gmail.com",
+          "username": "beginner003"
+        },
+        "committer": {
+          "name": "Weng Io Cheang (Yoyo)",
+          "email": "yoyo.cwi@gmail.com",
+          "username": "beginner003"
+        },
+        "added": [
+
+        ],
+        "removed": [
+
+        ],
+        "modified": [
+
+        ]
+      }
+    ],
+    "head_commit": {
+      "id": "8ffc04a68d7449d57a28b41876f93e41600f0240",
+      "tree_id": "f3e4b87902de33485f32ad845326b83826e910d7",
+      "distinct": true,
+      "message": "Empty-Commit-in-kristin/doc/readme-add-essence-branch",
+      "timestamp": "2025-02-12T14:40:05+01:00",
+      "url": "https://github.com/DD2480-Group-27/LaunchInterceptor/commit/8ffc04a68d7449d57a28b41876f93e41600f0240",
+      "author": {
+        "name": "Weng Io Cheang (Yoyo)",
+        "email": "yoyo.cwi@gmail.com",
+        "username": "beginner003"
+      },
+      "committer": {
+        "name": "Weng Io Cheang (Yoyo)",
+        "email": "yoyo.cwi@gmail.com",
+        "username": "beginner003"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+
+      ]
+    }
+  }
+]

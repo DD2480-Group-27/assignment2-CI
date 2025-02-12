@@ -1,7 +1,6 @@
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.io.IOException;
 
 public class CIServerTest {
@@ -28,9 +27,7 @@ public class CIServerTest {
      */
     @AfterClass
     public static void tearDown() throws Exception {
-        // Clean up
-        ProcessBuilder cleanupBuilder = new ProcessBuilder("rm", "-rf", "test-repo", "commit_hash.txt", "repo_path.txt");
-        cleanupBuilder.start().waitFor();
+
     }
 
     /**
@@ -40,18 +37,5 @@ public class CIServerTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testCloneRepository() throws Exception {
-        // Prepare the JSON payload (customised)
 
-        var jsonPayload = "";  // TODO set with json data test sample (reading file from resources)
-
-        var webhookHandler = new CIServer.WebhookJSONAnalyser(jsonPayload);
-
-        // TODO try the getters to check values and if repo is indeed cloned at right location
-
-        // webhookHandler.getCommit*();         // compare value for each
-        // webhookHandler.getRepoPath();        // check value validity
-
-    }
 }
