@@ -47,13 +47,14 @@
             <version>2.0.3</version>
         </dependency>
 
-   <dependency>
+        <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
             <version>6.8.0.202311291450-r</version>
         </dependency>
 
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -62,7 +63,8 @@
                 <version>3.11.2</version>
                 <configuration>
                     <show>public</show>
-                    <nohelp>false</nohelp>
+                    <nohelp>true</nohelp>
+                    <outputDirectory>doc</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
@@ -75,7 +77,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.11.2</version>
                 <configuration>
-                    <stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
                     <show>public</show>
                 </configuration>
             </plugin>
