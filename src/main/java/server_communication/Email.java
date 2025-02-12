@@ -7,20 +7,22 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Email {
-    public static void main(String[] args) {
 
-        // provide recipient's email ID
-        String to = "kristin.maria.rosen@gmail.com, kristinr@kth.se, kristinr@datasektionen.se";
-        // provide sender's email ID
-        String from = "testenkristest@gmail.com";
+    String to;
+    String from;
+    String username;
+    String password;
+    String host;
 
-        // provide account credentials
-        final String username = "apikey";
-        final String password = "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";
+    public Email(String recipient){
+        this.to = recipient;
+        this.from = "testenkristest@gmail.com";
+        this.username = "apikey";
+        this.password = "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";
+        this.host = "smtp.sendgrid.net";
+    }
 
-        // provide host address
-        String host = "smtp.sendgrid.net";
-
+    public void Send(String subject, String content){
         // configure SMTP details
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -30,12 +32,12 @@ public class Email {
 
         // create the mail Session object
         Session session = Session.getInstance(props,
-            new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
-                }
-            });
+        new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
 
         try {
             // create a MimeMessage object
@@ -45,17 +47,21 @@ public class Email {
             // set To email field
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             // set email subject field
-            message.setSubject("Sending test email");
+            message.setSubject(subject);
             // set the content of the email message
-            message.setText("Test email worked!");
-
+            message.setText(content);
+    
             // send the email message
             Transport.send(message);
-
-            System.out.println("Email Message Sent Successfully!");
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+    
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
     }
+   
+
+   
 }
+
+
+        
