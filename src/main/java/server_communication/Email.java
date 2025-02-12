@@ -10,16 +10,16 @@ public class Email {
     public static void main(String[] args) {
 
         // provide recipient's email ID
-        String to = "kristin.maria.rosen@gmail.com";
+        String to = "kristin.maria.rosen@gmail.com, kristinr@kth.se, kristinr@datasektionen.se";
         // provide sender's email ID
-        String from = "hello@demomailtrap.com";
+        String from = "testenkristest@gmail.com";
 
         // provide account credentials
-        final String username = "api";
-        final String password = "13aa7b79dd4d20ea23b3ccb2cde0906e";
+        final String username = "apikey";
+        final String password = "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";
 
         // provide host address
-        String host = "live.smtp.mailtrap.io";
+        String host = "smtp.sendgrid.net";
 
         // configure SMTP details
         Properties props = new Properties();
@@ -43,11 +43,11 @@ public class Email {
             // set From email field
             message.setFrom(new InternetAddress(from));
             // set To email field
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             // set email subject field
-            message.setSubject("Hello from the Mailtrap team");
+            message.setSubject("Sending test email");
             // set the content of the email message
-            message.setText("Enjoy sending emails from Jakarta Mail!");
+            message.setText("Test email worked!");
 
             // send the email message
             Transport.send(message);
