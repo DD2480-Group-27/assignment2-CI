@@ -1,4 +1,3 @@
-cd ...
 mkdir test-repo
 cd test-repo
 git init
