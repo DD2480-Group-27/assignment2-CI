@@ -12,8 +12,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-
+/**
+ * Main class of the project
+ * This class is used to start the server through its main() method
+ * This class extends AbstractHandler and provides an implementation of the handle() method to serve as a CI server
+ */
 public class CIServer extends AbstractHandler {
+
+    /**
+     * Empty default constructor, no resource nor parameter need for instantiation
+     */
+    public CIServer() {
+        super();
+    }
 
     /**
      * Handles incoming HTTP requests for the CI server.
@@ -94,7 +105,11 @@ public class CIServer extends AbstractHandler {
         response.getWriter().println("The CI server says 'Hello!'");
     }
 
-    // used to start the CI server in command line
+    /**
+     * Main entry point to launch the CI server
+     * @param args ignored
+     * @throws Exception in case the server fails to start and bind its port
+     */
     public static void main(String[] args) throws Exception {
         Server server = new Server(8027);
         server.setHandler(new CIServer());

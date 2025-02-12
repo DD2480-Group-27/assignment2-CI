@@ -17,11 +17,13 @@ import static org.junit.Assert.*;
 
 
 public class CodeVerifierTest {
+
+    public static final String TESTED_PROJECT_BASE_PATH = System.getProperty("java.io.tmpdir") + "/dd2480-builds/";
     /**
      * This variable is to be set in a way for the path "/tmp/dd2480-builds/" followed
      * by TEST_PROJECT_FOLDER to point to a valid mvn built project with a pom.xml at root
      */
-    private static final String TEST_PROJECT_FOLDER = CodeVerifier.TESTED_PROJECT_BASE_PATH + "test-LaunchInterceptor";
+    private static final String TEST_PROJECT_FOLDER = TESTED_PROJECT_BASE_PATH + "test-LaunchInterceptor";
     private DocumentBuilder documentBuilder;
 
     /**

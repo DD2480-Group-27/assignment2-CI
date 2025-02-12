@@ -150,6 +150,12 @@ public class WebhookJSONAnalyser {
         }
     }
 
+    /**
+     * Deletes a repo assuming it has been created using the naming convention of this project and the suitable
+     * location according to the same conventions
+     * @param commitHash the hash of the commit that triggered the cloning of the repo on the machine for testing
+     *                   purposes
+     */
     public void deleteRepo(String commitHash){
         // Get system temp directory in a platform-independent way
         File tempDir = new File(System.getProperty("java.io.tmpdir"));
@@ -184,6 +190,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the commit email address
      * @return a String containing the commit author's email
      */
     public String getCommitMail() {
@@ -191,6 +198,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the absolute path to the location where the repository has been cloned
      * @return a String representing the absolut path to where the repo has been cloned and set to the right version
      */
     public String getRepoPath() {
@@ -198,6 +206,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the commit hash
      * @return a String containing the commit hash
      */
     public String getCommitHash() {
@@ -205,6 +214,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the commit message
      * @return a String containing the commit message
      */
     public String getCommitMessage() {
@@ -212,6 +222,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the commit reference
      * @return a String containing the commit reference
      */
     public String getCommitRef() {
@@ -219,6 +230,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the commit branch
      * @return a String containing the commit branch
      */
     public String getCommitBranch() {
@@ -226,6 +238,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the repository's URL
      * @return a String containing the URL
      */
     public String getRepoURL() {
@@ -233,6 +246,7 @@ public class WebhookJSONAnalyser {
     }
 
     /**
+     * Attribute getter for the commit author
      * @return a String containing the commit author's username
      */
     public String getCommitAuthor() {

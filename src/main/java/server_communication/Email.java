@@ -6,6 +6,9 @@ import jakarta.mail.internet.MimeMessage;
 
 import java.util.Properties;
 
+/**
+ * This class provides an implementation to send emails to a constructor given recipient through the send() method
+ */
 public class Email {
 
     String to;
@@ -14,7 +17,12 @@ public class Email {
     String password;
     String host;
 
-    public Email(String recipient){
+    /**
+     * Class constructor stores the email recipient and sets the other communication related parameters
+     *
+     * @param recipient the recipient's email address
+     */
+    public Email(String recipient) {
         this.to = recipient;
         this.from = "testenkristest@gmail.com";
         this.username = "apikey";
@@ -22,7 +30,13 @@ public class Email {
         this.host = "smtp.sendgrid.net";
     }
 
-    public void Send(String subject, String content){
+    /**
+     * This method will send and email to the already defined recipient containing the information given as parameters
+     *
+     * @param subject the subject of the email
+     * @param content the content of the email
+     */
+    public void Send(String subject, String content) {
         // configure SMTP details
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -32,12 +46,12 @@ public class Email {
 
         // create the mail Session object
         Session session = Session.getInstance(props,
-        new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+                new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
 
         try {
             // create a MimeMessage object
@@ -50,17 +64,16 @@ public class Email {
             message.setSubject(subject);
             // set the content of the email message
             message.setText(content);
-    
+
             // send the email message
             Transport.send(message);
-    
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-    }
-   
 
-   
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
 
 
