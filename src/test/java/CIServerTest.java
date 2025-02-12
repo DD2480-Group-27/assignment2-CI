@@ -1,6 +1,4 @@
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.eclipse.jetty.server.Server;
 import org.json.JSONObject;
 
@@ -8,34 +6,62 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.BufferedOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
 public class CIServerTest {
     // Creating a local server
-    private Server server;
+    private static Server server;
+    private static String repoPath;
+    private static String commitHash;
 
-    @Before
+    @BeforeClass
     /**
      * Setting up the local server at http://localhost:8027/
      */
-    public void setUp() throws Exception {
+    public static void setUp() throws Exception {
+        // Run the setup script
+        ProcessBuilder builder = new ProcessBuilder("sh", "src/test/java/server_communication/server_setup.sh");
+        builder.inheritIO();
+        Process process = builder.start();
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new IOException("Failed to set up test repository");
+        }
+        System.out.println("Server and repo successfully added");
+
+        // Read the commit hash from file
+        commitHash = Files.readString(Path.of("commit_hash.txt")).trim();
+        System.out.println("Commit Hash: "+commitHash);
+        // Read the repo path from file
+        repoPath = Files.readString(Path.of("repo_path.txt")).trim();
+        System.out.println("Repo Path: "+ repoPath);
+
         server = new Server(8027);
         server.setHandler(new CIServer());
         server.start();
+
+        Thread.sleep(500);
     }
 
     /**
      * After the test finished, the server is stopped
      * @throws Exception
      */
-    @After
-    public void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
         server.stop();
+
+        // Clean up
+        ProcessBuilder cleanupBuilder = new ProcessBuilder("rm", "-rf", "test-repo", "commit_hash.txt", "repo_path.txt");
+        cleanupBuilder.start().waitFor();
     }
 
     /**
@@ -47,30 +73,16 @@ public class CIServerTest {
     @Test
     public void testCloneRepository() throws Exception {
         // Prepare the JSON payload (customised)
-        // You have to create a local repo first (shell script)
-        /*
-        mkdir test-repo
-        cd test-repo
-        git init
-        echo "Hello World" > README.md
-        git add README.md
-        git commit -m "Initial commit"
-         */
-        // then create a branch and commit
-        /*
-        git checkout -b feature-branch
-        echo "Feature 1" >> feature.txt
-        git add feature.txt
-        git commit -m "Add feature 1"
-         */
+
+
         String jsonPayload = new JSONObject()
                 .put("ref", "refs/heads/feature-branch")
                 .put("repository", new JSONObject()
                         //Paste the file location to your local repo
-                        .put("html_url", "file:///Users/searching.../Library/CloudStorage/OneDrive-Personal/HKUST/Year_3/Exchange_KTH/DD2480/Lab2/assignment2-CI/test-repo")) // Update this path
+                        .put("html_url", "file://"+repoPath)) // Update this path
                 .put("head_commit", new JSONObject()
                         // To get the commit hash, cd to your repo, then do git log, then paste it below
-                        .put("id", "b9d18b79e1f5cd1c804a67ea7f3da628468c999b"))
+                        .put("id", commitHash))
                 .toString();
 
         // Send the POST request
@@ -79,17 +91,33 @@ public class CIServerTest {
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.getOutputStream().write(jsonPayload.getBytes(StandardCharsets.UTF_8));
 
-//        // Read the response
-//        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
-//            String response = reader.lines().collect(Collectors.joining("\n"));
-//            assertEquals("The CI server says 'Hello!'", response);
-//        }
+        try (BufferedOutputStream out = new BufferedOutputStream(connection.getOutputStream())) {
+            out.write(jsonPayload.getBytes(StandardCharsets.UTF_8));
+            out.flush(); // Ensure data is sent
+        }
+
+    // Check the response code
+        int responseCode = connection.getResponseCode();
+        System.out.println("Response Code: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            // Read the response
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                String response = reader.lines().collect(Collectors.joining("\n"));
+                System.out.println("Response from server: " + response);
+                assertEquals("The CI server says 'Hello!'", response);
+            }
+        } else {
+            System.out.println("Failed to send POST request. Response Code: " + responseCode);
+        }
+//
+        // Wait a bit for processing
+        Thread.sleep(1000);
 
         // Check if the repository was cloned
         // You need to change the directory name here also, since the cloned repo is put in a directory name build-[commithash]
-        File clonedRepoDir = new File(System.getProperty("java.io.tmpdir"), "dd2480-builds/build-b9d18b79e1f5cd1c804a67ea7f3da628468c999b");
+        File clonedRepoDir = new File(System.getProperty("java.io.tmpdir"), "dd2480-builds/build-"+commitHash);
         assertTrue(clonedRepoDir.exists());
     }
 }

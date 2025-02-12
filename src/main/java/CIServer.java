@@ -21,13 +21,15 @@ public class CIServer extends AbstractHandler {
                        HttpServletResponse response)
         throws IOException, ServletException
     {
+        System.out.println("In handle process");
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 
-        // System.out.println(target);
+         System.out.println("Target:"+ target);
 
         // Read the JSON payload
+        System.out.println("Reading the payload");
         StringBuilder payload = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8))) {
@@ -37,7 +39,7 @@ public class CIServer extends AbstractHandler {
             }
         }
 
-        // System.out.println("Payload received:\n" + payload.toString());
+         System.out.println("Payload received:\n" + payload.toString());
 
         try {
             JSONObject json = new JSONObject(payload.toString());
@@ -121,7 +123,7 @@ public class CIServer extends AbstractHandler {
         }
     }
 
-    private boolean deleteDirectory(File directory) {
+    private void deleteDirectory(File directory) {
         if (directory.isDirectory()) {
             // List all files and subdirectories
             File[] files = directory.listFiles();
@@ -133,7 +135,7 @@ public class CIServer extends AbstractHandler {
             }
         }
         // delete the directory itself
-        return directory.delete(); }
+        directory.delete(); }
     // used to start the CI server in command line
     public static void main(String[] args) throws Exception {
         Server server = new Server(8027);
