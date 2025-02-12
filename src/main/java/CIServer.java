@@ -1,11 +1,11 @@
 import code_verification.CodeVerifier;
+import server_communication.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import server_communication.WebhookJSONAnalyser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -73,17 +73,32 @@ public class CIServer extends AbstractHandler {
             var commitAuthor = payloadAnalyser.getCommitAuthor();
             var repoURL = payloadAnalyser.getRepoURL();
 
+            String mailSubject;
+            String message;
+
             // Verifies the code compilation and runs the associated tests if compilation is successful.
             // If the code fails to compile, retrieves the compilation output.
             // If the tests fail, retrieves the test result and output for further notification.
             if (codeVerifier.verifyCompilation()) {
                 var testResult = codeVerifier.runTests();
                 var testOutputXml = codeVerifier.getTestXml();
-                // TODO  notification with test result if testResult != 0 also send testOutputXml
+                if (testResult ){
+                    mailSubject = "Compilation and tests successful";
+                    message = "Successfully compiled and ran all tests!";
+                } else {
+                    mailSubject = "Compilation successful, test failures";
+                    message = "somehow should be testOutputXML but it is a list...";
+                }
+                
             } else {
                 var compilationOutput = codeVerifier.getCompilationOutput();
-                // TODO  notification with compilation result
+                mailSubject = "Compilation failed";
+                message = compilationOutput;
             }
+
+            
+            Email email = new Email(commitMail);
+            email.Send(mailSubject, message);
 
         } catch (InterruptedException e) {
             System.err.println("Compilation or testing process was interrupted");
