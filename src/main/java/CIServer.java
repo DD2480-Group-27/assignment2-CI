@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import org.eclipse.jgit.api.ResetCommand;
 import org.json.JSONObject;
 import org.eclipse.jgit.api.Git;
+import server_communication.*;
 
 public class CIServer extends AbstractHandler {
     
@@ -60,7 +61,7 @@ public class CIServer extends AbstractHandler {
 
             // Code Validation
 
-            // After
+           
 
         } catch (Exception e) {
             System.out.println("Error parsing JSON payload: " + e.getMessage());
