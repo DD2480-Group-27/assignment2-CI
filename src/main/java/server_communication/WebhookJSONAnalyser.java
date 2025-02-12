@@ -1,8 +1,12 @@
 package server_communication;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.ResetCommand;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Ref;
 import org.json.JSONObject;
 import java.io.File;
+import java.util.List;
 
 /**
  * Public class intended to fetch relevant data from JSON webhook request
@@ -58,7 +62,7 @@ public class WebhookJSONAnalyser {
             this.repoPath = cloneRepo(repoURL, commitHash, commitBranch);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);          //TODO make maybe a better handling (printing a little bit of information about the fail if possible (idk))
+            throw new RuntimeException("The repo is not cloned successfully");
         }
 
 
@@ -104,8 +108,33 @@ public class WebhookJSONAnalyser {
                     .setURI(repoURL)
                     .setDirectory(repoDir)
                     .call();
-            // Checkout the right branch
-            git.checkout().setName(branchName).call();
+
+            // Fetch all branches
+            git.fetch().call();
+            // List remote branches to confirm if the branch exists
+            List<Ref> remoteBranches = git.branchList().setListMode(ListBranchCommand.ListMode.REMOTE).call();
+            try {
+                // Try exact branch name first
+                if (git.getRepository().findRef(branchName) != null) {
+                    git.checkout().setName(branchName).call();
+                }
+                // Try common branch name patterns
+                String[] branchPatterns = {
+                        branchName,
+                        "refs/heads/" + branchName,
+                        "refs/remotes/origin/" + branchName,
+                        "origin/" + branchName
+                };
+
+                for (String pattern : branchPatterns) {
+                    if (remoteBranches.stream().anyMatch(ref -> ref.getName().equals(pattern))) {
+                        git.checkout().setName(pattern).call();
+                    }
+                }
+            } catch (GitAPIException e) {
+                System.err.println("Error checking out branch: " + e.getMessage());
+                return null;
+            }
             // Hard reset to the specific commit
             git.reset()
                     .setMode(ResetCommand.ResetType.HARD)
@@ -128,7 +157,6 @@ public class WebhookJSONAnalyser {
         if (!baseDir.exists()) {
             throw new RuntimeException("dd2480-builds directory does not exist!");
         }
-        // Create a unique directory for this build using the commit hash
         String buildDir = "build-" + commitHash;
         File repoDir = new File(baseDir, buildDir);
         //if the directory does not exist for a commit hash, throw error
