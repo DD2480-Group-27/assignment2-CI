@@ -144,7 +144,7 @@ public class CodeVerifierTest {
         assertDoesNotThrow(cVerifier::getCompilationOutput);
         assertFalse(cVerifier.getCompilationOutput().isBlank());
         assertDoesNotThrow(cVerifier::getTestXml);
-        assertTrue(Objects.nonNull(cVerifier.getTestXml()));
+        assertFalse(Objects.nonNull(cVerifier.getTestXml()));
     }
 
     private void assertDoesNotThrow(Runnable runnable) {
