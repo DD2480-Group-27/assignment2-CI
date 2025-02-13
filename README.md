@@ -10,6 +10,69 @@ This CI server enhances the development workflow by automating essential tasks. 
 
 ## Dependencies
 
+### Maven Testing Dependencies
+
+- **JUnit (4.13.1)**: Unit testing framework (test scope).
+- **Jetty Server (11.0.9)**: Embedded web server.
+- **Jakarta Servlet API (5.0.0)**: HTTP request handling (provided scope).
+- **org.json (20210307)**: JSON parsing and manipulation.
+- **Angus Mail (2.0.3)**: JavaMail implementation.
+- **JGit (6.8.0.202311291450-r)**: Git repository interaction.
+- **Maven Surefire Plugin (2.12.4)**: Runs unit tests in Maven.
+
+### Library Dependencies
+
+- `org.junit.Before`
+- `org.junit.BeforeClass`
+- `org.junit.Test`
+- `org.w3c.dom.Document`
+- `org.xml.sax.InputSource`
+- `org.xml.sax.SAXException`
+- `javax.xml.parsers.DocumentBuilder`
+- `javax.xml.parsers.DocumentBuilderFactory`
+- `javax.xml.parsers.ParserConfigurationException`
+- `java.io.BufferedReader`
+- `java.io.File`
+- `java.io.IOException`
+- `java.io.InputStreamReader`
+- `java.io.StringReader`
+- `java.nio.charset.StandardCharsets`
+- `java.nio.file.Files`
+- `java.nio.file.Paths`
+- `java.util.Arrays`
+- `java.util.List`
+- `java.util.Objects`
+- `java.util.Properties`
+- `java.util.regex.Matcher`
+- `java.util.regex.Pattern`
+
+### Jakarta Mail Dependencies
+
+- `jakarta.mail.*`
+- `jakarta.mail.internet.InternetAddress`
+- `jakarta.mail.internet.MimeMessage`
+- `jakarta.servlet.ServletException`
+- `jakarta.servlet.http.HttpServletRequest`
+- `jakarta.servlet.http.HttpServletResponse`
+
+### JGit Dependencies
+
+- `org.eclipse.jgit.api.Git`
+- `org.eclipse.jgit.api.ListBranchCommand`
+- `org.eclipse.jgit.api.ResetCommand`
+- `org.eclipse.jgit.api.errors.GitAPIException`
+- `org.eclipse.jgit.lib.Ref`
+
+### Jetty Dependencies
+
+- `org.eclipse.jetty.server.Request`
+- `org.eclipse.jetty.server.Server`
+- `org.eclipse.jetty.server.handler.AbstractHandler`
+
+### JSON Dependencies
+
+- `org.json.JSONArray`
+- `org.json.JSONObject`
 ## Getting Started: Your Setup
 
 ## Need Assistance? Support is Here!
