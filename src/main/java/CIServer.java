@@ -12,9 +12,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+
+/**
+ * Main class of the project
+ * This class is used to start the server through its main() method
+ * This class extends AbstractHandler and provides an implementation of the handle() method to serve as a CI server
+ */
 
 public class CIServer extends AbstractHandler {
+
+    /**
+     * Empty default constructor, no resource nor parameter need for instantiation
+     */
+    public CIServer() {
+        super();
+    }
 
     /**
      * Handles incoming HTTP requests for the CI server.
@@ -81,7 +93,7 @@ public class CIServer extends AbstractHandler {
             // If the code fails to compile, retrieves the compilation output.
             // If the tests fail, retrieves the test result and output for further notification.
             if (codeVerifier.verifyCompilation()) {
-                
+
                 var testResult = codeVerifier.runTests();
                 var testOutputXml = codeVerifier.getTestXml();
 
@@ -97,21 +109,21 @@ public class CIServer extends AbstractHandler {
                     mailSubject = "Compilation successful, test failures";
                     message = messageBuilder.toString();
                 }
-                
+
             } else {
                 var compilationOutput = codeVerifier.getCompilationOutput();
                 mailSubject = "Compilation failed";
                 message = compilationOutput;
             }
 
-            
+
             Email email = new Email(commitMail);
             email.send(mailSubject, message);
 
         } catch (InterruptedException e) {
             System.err.println("Compilation or testing process was interrupted");
         } catch (RuntimeException e) {
-            System.err.println("Failed to parse payload from last request" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+            System.err.println("Failed to parse payload from last request" + e.getMessage());
         }
 
         response.getWriter().println("The CI server says 'Hello!'");
@@ -134,11 +146,15 @@ public class CIServer extends AbstractHandler {
                 failingTests.append(testName + " ");
             }
         }
-    
+
         return failingTests;
     }
 
-    // used to start the CI server in command line
+    /**
+     * Main entry point to launch the CI server
+     * @param args ignored
+     * @throws Exception in case the server fails to start and bind its port
+     */
     public static void main(String[] args) throws Exception {
         Server server = new Server(8027);
         server.setHandler(new CIServer());

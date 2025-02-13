@@ -16,10 +16,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * This class provides an implementation to try to compile and to run the tests of a maven based project located at
+ * the path given to its constructor.
+ */
 public class CodeVerifier {
-
-    public static final String TESTED_PROJECT_BASE_PATH = System.getProperty("java.io.tmpdir") + "/dd2480-builds/";
 
     private final File projectFolder;
     private boolean isCompiled;

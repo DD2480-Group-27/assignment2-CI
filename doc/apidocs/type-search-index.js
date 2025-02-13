@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"CIServer"},{"p":"code_verification","l":"CodeVerifier"},{"p":"server_communication","l":"Email"},{"p":"server_communication","l":"WebhookJSONAnalyser"}];updateSearchResults();
