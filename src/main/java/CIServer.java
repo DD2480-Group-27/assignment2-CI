@@ -111,7 +111,7 @@ public class CIServer extends AbstractHandler {
         } catch (InterruptedException e) {
             System.err.println("Compilation or testing process was interrupted");
         } catch (RuntimeException e) {
-            System.err.println("Failed to parse payload from last request");
+            System.err.println("Failed to parse payload from last request" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
 
         response.getWriter().println("The CI server says 'Hello!'");
