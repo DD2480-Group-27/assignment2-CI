@@ -81,14 +81,21 @@ public class CIServer extends AbstractHandler {
             // If the code fails to compile, retrieves the compilation output.
             // If the tests fail, retrieves the test result and output for further notification.
             if (codeVerifier.verifyCompilation()) {
+                
                 var testResult = codeVerifier.runTests();
                 var testOutputXml = codeVerifier.getTestXml();
+
                 if (testResult ){
                     mailSubject = "Compilation and tests successful";
                     message = "Successfully compiled and ran all tests!";
                 } else {
+                    StringBuilder messageBuilder = new StringBuilder("Test failures: " + System.lineSeparator());
+                    for(Document doc: testOutputXml){
+                        StringBuilder failingTests = getFailingTests(doc);
+                        messageBuilder.append(failingTests + System.lineSeparator());
+                    }
                     mailSubject = "Compilation successful, test failures";
-                    message = "somehow should be testOutputXML but it is a list...";
+                    message = messageBuilder.toString();
                 }
                 
             } else {
@@ -110,25 +117,24 @@ public class CIServer extends AbstractHandler {
         response.getWriter().println("The CI server says 'Hello!'");
     }
 
-    //Method for extracting names of failing tests
-    private static List<String> getFailingTests(Document doc) {
-        List<String> failingTests = new ArrayList<>();
-        
+   //Method for extracting names of failing tests
+   private static StringBuilder getFailingTests(Document doc) {
+        StringBuilder failingTests = new StringBuilder("Failing tests : ");
         NodeList testCases = doc.getElementsByTagName("testcase");
 
         for (int i = 0; i < testCases.getLength(); i++) {
             Element testCase = (Element) testCases.item(i);
-            String testName = testCase.getAttribute("name");
+            StringBuilder testName = new StringBuilder(testCase.getAttribute("name"));
 
             // Check for failure or error child elements
             NodeList failureNodes = testCase.getElementsByTagName("failure");
             NodeList errorNodes = testCase.getElementsByTagName("error");
 
             if (failureNodes.getLength() > 0 || errorNodes.getLength() > 0) {
-                failingTests.add(testName);
+                failingTests.append(testName + " ");
             }
         }
-        
+    
         return failingTests;
     }
 
