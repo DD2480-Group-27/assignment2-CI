@@ -1,17 +1,18 @@
 import code_verification.CodeVerifier;
+import server_communication.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import server_communication.WebhookJSONAnalyser;
+import org.w3c.dom.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-
+import java.util.*;
 
 public class CIServer extends AbstractHandler {
 
@@ -73,25 +74,68 @@ public class CIServer extends AbstractHandler {
             var commitAuthor = payloadAnalyser.getCommitAuthor();
             var repoURL = payloadAnalyser.getRepoURL();
 
+            String mailSubject;
+            String message;
+
             // Verifies the code compilation and runs the associated tests if compilation is successful.
             // If the code fails to compile, retrieves the compilation output.
             // If the tests fail, retrieves the test result and output for further notification.
             if (codeVerifier.verifyCompilation()) {
+                
                 var testResult = codeVerifier.runTests();
                 var testOutputXml = codeVerifier.getTestXml();
-                // TODO  notification with test result if testResult != 0 also send testOutputXml
+
+                if (testResult ){
+                    mailSubject = "Compilation and tests successful";
+                    message = "Successfully compiled and ran all tests!";
+                } else {
+                    StringBuilder messageBuilder = new StringBuilder("Test failures: " + System.lineSeparator());
+                    for(Document doc: testOutputXml){
+                        StringBuilder failingTests = getFailingTests(doc);
+                        messageBuilder.append(failingTests + System.lineSeparator());
+                    }
+                    mailSubject = "Compilation successful, test failures";
+                    message = messageBuilder.toString();
+                }
+                
             } else {
                 var compilationOutput = codeVerifier.getCompilationOutput();
-                // TODO  notification with compilation result
+                mailSubject = "Compilation failed";
+                message = compilationOutput;
             }
+
+            
+            Email email = new Email(commitMail);
+            email.send(mailSubject, message);
 
         } catch (InterruptedException e) {
             System.err.println("Compilation or testing process was interrupted");
         } catch (RuntimeException e) {
-            System.err.println("Failed to parse payload from last request");
+            System.err.println("Failed to parse payload from last request" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
 
         response.getWriter().println("The CI server says 'Hello!'");
+    }
+
+   //Method for extracting names of failing tests
+   private static StringBuilder getFailingTests(Document doc) {
+        StringBuilder failingTests = new StringBuilder("Failing tests : ");
+        NodeList testCases = doc.getElementsByTagName("testcase");
+
+        for (int i = 0; i < testCases.getLength(); i++) {
+            Element testCase = (Element) testCases.item(i);
+            StringBuilder testName = new StringBuilder(testCase.getAttribute("name"));
+
+            // Check for failure or error child elements
+            NodeList failureNodes = testCase.getElementsByTagName("failure");
+            NodeList errorNodes = testCase.getElementsByTagName("error");
+
+            if (failureNodes.getLength() > 0 || errorNodes.getLength() > 0) {
+                failingTests.append(testName + " ");
+            }
+        }
+    
+        return failingTests;
     }
 
     // used to start the CI server in command line
