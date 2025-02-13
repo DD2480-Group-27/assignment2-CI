@@ -26,8 +26,10 @@ public class Email {
         this.to = recipient;
         this.from = "testenkristest@gmail.com";
         this.username = "apikey";
-        this.password = "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";
         this.host = "smtp.sendgrid.net";
+        String key = System.getenv("EMAIL_API_KEY");
+        this.password = key;
+
     }
 
     /**
