@@ -130,21 +130,25 @@ To deploy your Continuous Integration Server, follow these steps:
         - Designed and implemented the [`CodeVerifier.java`](http://CodeVerifier.java) class
         - Created unit tests for all methods in `CodeVerifier.java`.
         - Did code refactoring
-- Kristen Rosen (https://github.com/KristinRosen)
+- **Kristen Rosen (**https://github.com/KristinRosen)
     - **Contributions**:
         - Designed and Implemented the [`Email.java`](http://Email.java) class.
         - Created the unit tests for all methods from [`Email.java`](http://Email.java) .
-- [**C](https://github.com/anotherusername)heang Weng Io, Yoyo (**https://github.com/beginner003)
+- **Cheang Weng Io, Yoyo (**https://github.com/beginner003)
     - **Contributions**:
         - Authored `README.md` .
         - Designed and Implemented the `WebhookAnalyser.java` .
         - Created unit tests for all methods in `WebhookAnalyser.java` .
-- Edgar Wolff (https://github.com/edgarwolff)
+- **Edgar Wolff (**https://github.com/edgarwolff)
     - **Contributions**:
         - Designed and implemented the [`CodeVerifier.java`](http://CodeVerifier.java) class
         - Created unit tests for all methods in `CodeVerifier.java`.
         - Did multiple code refactoring in `WebhookAnalyser.java` , `CIServer.java` , and their respective tests.
         - Created the integration test.
+
+
+## Way of working collaboratively (according to Essence)
+The team has begun working together after understanding each other's positions and intentions. Everyone has understood the responsibilities that the group and each person has taken on and will collaborate to make sure this is completed on time. Some issues with workload distribution and wasted work are still slowing progress. While trust and commitment exist, the team has yet to fully streamline workflows, minimize redundant work, and ensure seamless integration across all contributions. Until these challenges are addressed, the team remains in a collaborative state but has not yet reached optimal performance.
 
 ### Acknowledgments
 
