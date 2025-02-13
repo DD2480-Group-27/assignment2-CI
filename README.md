@@ -121,25 +121,25 @@ To deploy your Continuous Integration Server, follow these steps:
 
 ### Contributors
 
-- **Linus Bälter (**https://github.com/blimpan)
+- **Linus Bälter** (https://github.com/blimpan)
     - **Contributions**:
         - Created and configured CI server on remote machine.
         - Ran tests on the remote machine.
-- **Henrik Pendersén (**https://github.com/WatermelonGodz)
+- **Henrik Pendersén** (https://github.com/WatermelonGodz)
     - **Contributions**:
         - Designed and implemented the [`CodeVerifier.java`](http://CodeVerifier.java) class
         - Created unit tests for all methods in `CodeVerifier.java`.
         - Did code refactoring
-- **Kristen Rosen (**https://github.com/KristinRosen)
+- **Kristen Rosen** (https://github.com/KristinRosen)
     - **Contributions**:
         - Designed and Implemented the [`Email.java`](http://Email.java) class.
         - Created the unit tests for all methods from [`Email.java`](http://Email.java) .
-- **Cheang Weng Io, Yoyo (**https://github.com/beginner003)
+- **Cheang Weng Io, Yoyo** (https://github.com/beginner003)
     - **Contributions**:
         - Authored `README.md` .
         - Designed and Implemented the `WebhookAnalyser.java` .
         - Created unit tests for all methods in `WebhookAnalyser.java` .
-- **Edgar Wolff (**https://github.com/edgarwolff)
+- **Edgar Wolff** (https://github.com/edgarwolff)
     - **Contributions**:
         - Designed and implemented the [`CodeVerifier.java`](http://CodeVerifier.java) class
         - Created unit tests for all methods in `CodeVerifier.java`.
