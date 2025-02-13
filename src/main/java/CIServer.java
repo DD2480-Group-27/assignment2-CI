@@ -99,7 +99,6 @@ public class CIServer extends AbstractHandler {
             
             Email email = new Email(commitMail);
             email.Send(mailSubject, message);
-            //This is a test line because I need to test if there is a response to me pushing
 
         } catch (InterruptedException e) {
             System.err.println("Compilation or testing process was interrupted");

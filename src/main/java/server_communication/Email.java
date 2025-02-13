@@ -18,7 +18,7 @@ public class Email {
         this.to = recipient;
         this.from = "testenkristest@gmail.com";
         this.username = "apikey";
-        this.password = "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";
+        this.password = "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";
         this.host = "smtp.sendgrid.net";
     }
 
