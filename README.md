@@ -86,25 +86,33 @@ For an in-depth look at the code, please refer to our javaDoc.
 ## System Requirements
 
 This project requires Java 21 LTS (tested on versions 21.0.1 and 21.0.5).
+This project requires ngrok v3 (tested on version 3.19.1).
+This project requires Apache Maven 3.9.9
 
 ## Running the Server: Instructions
 
 To deploy your Continuous Integration Server, follow these steps:
 
-1. **Clone the Repository**: Start by cloning the project's repository to your local machine.
-2. **Install Apache Maven**: Ensure you have **Apache Maven 3.9.9** installed. If you haven't installed it yet, you can download it from [Apache Maven Download](https://maven.apache.org/download.cgi).
-3. **Build the Project**: Open your terminal and navigate to the project directory. Run the following command to clean and install the project:
+1. **Clone the repository**: Start by cloning the project's repository to your local machine.
+2. **Build the project**: Open your terminal and navigate to the project directory. Run the following command to clean and install the project:
     
     `mvn clean install`
     
-4. **Compile the Code**: Next, compile the project by executing:
+3. **Compile the code**: Next, compile the project by executing:
     
     `mvn compile`
     
-5. **Run the Server**: Finally, start the Continuous Integration Server by running:
+4. **Run the Java server**: Finally, start the Continuous Integration Server by running:
     
     `mvn exec:java -Dexec.mainClass="CIServer"`
-    
+
+5. **Set ngrok authentication token**: After creating a ngrok account, use the command:
+
+    `ngrok config add-authtoken $YOUR_AUTHTOKEN`
+   
+6. **Start ngrok service**: Make Java server accessible on public Internet using the command:
+
+    `./ngrok http [optional url] [port]`
 
 ## Statement of Contributions
 
@@ -114,8 +122,8 @@ To deploy your Continuous Integration Server, follow these steps:
 
 - **Linus Bälter (**https://github.com/blimpan)
     - **Contributions**:
-        - Created the remote server.
-        - Running tests on the remote server.
+        - Created and configured CI server on remote machine.
+        - Ran tests on the remote machine.
 - **Henrik Pendersén (**https://github.com/WatermelonGodz)
     - **Contributions**:
         - Designed and implemented the [`CodeVerifier.java`](http://CodeVerifier.java) class
