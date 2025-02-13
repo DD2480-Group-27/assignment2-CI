@@ -111,7 +111,7 @@ public class CIServer extends AbstractHandler {
     }
 
     //Method for extracting names of failing tests
-    public static List<String> getFailingTests(Document doc) {
+    private static List<String> getFailingTests(Document doc) {
         List<String> failingTests = new ArrayList<>();
         
         NodeList testCases = doc.getElementsByTagName("testcase");
