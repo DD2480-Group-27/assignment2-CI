@@ -6,12 +6,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.w3c.dom.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-
+import java.util.*;
 
 public class CIServer extends AbstractHandler {
 
@@ -98,7 +99,7 @@ public class CIServer extends AbstractHandler {
 
             
             Email email = new Email(commitMail);
-            email.Send(mailSubject, message);
+            email.send(mailSubject, message);
 
         } catch (InterruptedException e) {
             System.err.println("Compilation or testing process was interrupted");
@@ -107,6 +108,28 @@ public class CIServer extends AbstractHandler {
         }
 
         response.getWriter().println("The CI server says 'Hello!'");
+    }
+
+    //Method for extracting names of failing tests
+    public static List<String> getFailingTests(Document doc) {
+        List<String> failingTests = new ArrayList<>();
+        
+        NodeList testCases = doc.getElementsByTagName("testcase");
+
+        for (int i = 0; i < testCases.getLength(); i++) {
+            Element testCase = (Element) testCases.item(i);
+            String testName = testCase.getAttribute("name");
+
+            // Check for failure or error child elements
+            NodeList failureNodes = testCase.getElementsByTagName("failure");
+            NodeList errorNodes = testCase.getElementsByTagName("error");
+
+            if (failureNodes.getLength() > 0 || errorNodes.getLength() > 0) {
+                failingTests.add(testName);
+            }
+        }
+        
+        return failingTests;
     }
 
     // used to start the CI server in command line

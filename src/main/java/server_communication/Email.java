@@ -22,7 +22,7 @@ public class Email {
         this.host = "smtp.sendgrid.net";
     }
 
-    public void Send(String subject, String content){
+    public void send(String subject, String content){
         // configure SMTP details
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
