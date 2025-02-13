@@ -81,7 +81,7 @@ If you encounter issues or have questions about the project, please file an issu
 
 ## Code Insights: Understanding the System
 
-For an in-depth look at the code, please refer to our javaDoc.
+For an in-depth look at the code, please refer to our javaDoc which is present in the code and through [web interface](https://dd2480-group-27.github.io/assignment2-CI/doc/apidocs/index.html).
 
 ## System Requirements
 
