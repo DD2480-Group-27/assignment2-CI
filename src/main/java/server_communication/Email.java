@@ -36,7 +36,7 @@ public class Email {
      * @param subject the subject of the email
      * @param content the content of the email
      */
-    public void Send(String subject, String content) {
+    public void send(String subject, String content) {
         // configure SMTP details
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
